@@ -16,14 +16,14 @@ connectDB()
 // app.use(cors(corsOptions))
 app.use(
     cors({
-      origin: ["http://127.0.0.1:3000", "http://localhost:3000"],
+      origin: ["https://vrv-security-backend-assignment-sable.vercel.app", "http://127.0.0.1:3000", "http://localhost:3000"],
       methods: "GET, POST, PATCH, DELETE, PUT",
       credentials: true,
     })
   )
   
   app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000")
+    res.header("Access-Control-Allow-Origin", "https://vrv-security-backend-assignment-sable.vercel.app", "http://localhost:3000")
     next()
   })
 
