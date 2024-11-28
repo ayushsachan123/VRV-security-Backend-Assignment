@@ -2,21 +2,29 @@ const Note = require('../models/Note')
 const User = require('../models/User')
 
 const getAllNotes = async (req, res) => {
-    // Get all notes from MongoDB
-    const notes = await Note.find().lean()
+    try {
+        // Fetch all notes and populate the 'user' field to include the user's details
+        const notes = await Note.find().lean().populate('user', 'username')
 
-    // If no notes 
-    if (!notes?.length) {
-        return res.status(400).json({ message: 'No notes found' })
+        // If no notes are found
+        if (!notes?.length) {
+            return res.status(404).json({ message: 'No notes found' })
+        }
+
+        // Map the notes to include the username directly (already populated)
+        const notesWithUser = notes.map(note => ({
+            ...note,
+            username: note.user?.username || 'Unknown User', // Handle cases where user might be missing
+        }))
+
+        res.json(notesWithUser)
+    } catch (error) {
+        // Handle any errors that occur during the request
+        console.error(error)
+        res.status(500).json({ message: 'An error occurred while fetching notes' })
     }
-
-    const notesWithUser = await Promise.all(notes.map(async (note) => {
-        const user = await User.findById(note.user).lean().exec()
-        return { ...note, username: user.username }
-    }))
-
-    res.json(notesWithUser)
 }
+
 
 const createNewNote = async (req, res) => {
     const { user, title, text } = req.body
