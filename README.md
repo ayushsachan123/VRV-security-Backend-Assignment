@@ -5,6 +5,8 @@ This project is built with **Node.js**, **Express.js** and **React.js** and serv
 
 ---
 
+![authentication](https://github.com/user-attachments/assets/4c2b13ec-9d0b-4aa3-8e2e-e223687d131e)
+
 ## Features
 
 ### User Management
@@ -39,4 +41,5 @@ This project is built with **Node.js**, **Express.js** and **React.js** and serv
   ACCESS_TOKEN_SECRET=<your_secret>
   REFRESH_TOKEN_SECRET=<your_secret>
   PORT=3500
+
 
